@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Mail, Phone, Linkedin, Download, ExternalLink, ArrowUpRight } from "lucide-react";
+import { TypeAnimation } from "react-type-animation"; // 👈 added for typing effect
 
 // ------------------------------------------------------------
 // CONFIG – Update these if needed
@@ -104,56 +105,61 @@ function useTyping(text, speed = 55, pause = 1200) {
 }
 
 function Hero() {
-  const phrases = [
-    "Biotechnologist",
-    "Researcher",
-    "Innovator",
-    "Machine Learning Enthusiast",
-  ];
-  const [p, setP] = useState(0);
-  const typed = useTyping(phrases[p]);
-  useEffect(() => {
-    const cycle = setInterval(() => setP((v) => (v + 1) % phrases.length), 3500);
-    return () => clearInterval(cycle);
-  }, []);
-
   return (
-    <section id="home" className="relative min-h-[92vh] flex items-center">
-      <div className="absolute inset-0 bg-[#0b0b12]" />
-      <div className={`absolute -inset-20 blur-3xl opacity-30 ${glow}`} />
-      <div className="relative mx-auto max-w-6xl px-4 pt-28 pb-16">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl md:text-6xl font-black tracking-tight text-white"
+    <section id="home" className="relative flex flex-col items-center justify-center min-h-[92vh] text-center overflow-hidden">
+      {/* Background gradient with glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-black to-cyan-900 animate-pulse opacity-70" />
+      <div className="absolute inset-0 backdrop-blur-sm" />
+
+      <motion.h1
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 drop-shadow-lg z-10"
+      >
+        Rajarajan T P
+      </motion.h1>
+
+      {/* Typing effect */}
+      <TypeAnimation
+        sequence={[
+          "Biotechnologist",
+          2000,
+          "Researcher",
+          2000,
+          "Innovator",
+          2000,
+          "Machine Learning Enthusiast",
+          2000,
+        ]}
+        wrapper="span"
+        speed={50}
+        repeat={Infinity}
+        className="mt-4 text-xl md:text-2xl text-gray-200 z-10"
+      />
+
+      <p className="mt-5 max-w-2xl text-white/70 leading-relaxed z-10">
+        B.Tech (Honors) in Biotechnology — CGPA 9.5. Passionate about computational biology,
+        bioinformatics, and applying machine learning to healthcare and biotechnology.
+        Awarded Best Outgoing Student (Biotech) and multiple research accolades.
+      </p>
+
+      {/* CTA Buttons */}
+      <div className="mt-8 flex gap-6 z-10">
+        <a
+          href={RESUME_PDF_PATH}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-6 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold shadow-lg hover:scale-105 transition"
         >
-          Rajarajan T P
-        </motion.h1>
-        <div className="mt-3 text-xl md:text-2xl font-medium text-white/80">
-          <span className="mr-2">I am a</span>
-          <span className={`tabular-nums ${textGlow}`}>{typed}</span>
-          <span className="animate-pulse">▍</span>
-        </div>
-        <p className="mt-5 max-w-2xl text-white/70 leading-relaxed">
-          B.Tech (Honors) in Biotechnology — CGPA 9.5. Passionate about computational biology,
-          bioinformatics, and applying machine learning to healthcare and biotechnology.
-          Awarded Best Outgoing Student (Biotech) and multiple research accolades.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href="#projects"
-            className="rounded-2xl px-5 py-3 bg-white/10 border border-white/10 text-white hover:bg-white/15 transition shadow-lg shadow-purple-700/10"
-          >
-            View Projects
-          </a>
-          <a
-            href="#contact"
-            className="rounded-2xl px-5 py-3 border border-white/10 text-white/90 hover:text-white hover:bg-white/5 transition"
-          >
-            Contact Me
-          </a>
-        </div>
+          Download CV
+        </a>
+        <a
+          href="#contact"
+          className="px-6 py-3 rounded-2xl border border-cyan-400 text-cyan-300 font-semibold shadow-lg hover:bg-cyan-900/50 transition"
+        >
+          Contact Me
+        </a>
       </div>
     </section>
   );
