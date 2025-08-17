@@ -295,39 +295,6 @@ function Skills() {
 // PROJECTS – 3D tilt cards + grid hover fade-in
 // ------------------------------------------------------------
 
-const projects = [
-  {
-    title:
-      "Subtractive proteomics & virtual screening against Diabetic Gangrene bacteria",
-    desc:
-      "Pipeline to identify druggable bacterial proteins; in-silico analysis and docking of algal polysaccharides.",
-    tags: ["Bioinformatics", "Docking", "Drug Discovery"],
-    link: "https://doi.org/10.1016/j.somejournal.2023.12345", // replace with real
-  },
-  {
-    title: "Rev–RRE interactions in HIV-1 Subtype B & C",
-    desc:
-      "Comparative in-silico analysis across 16 Rev–RRE complexes; sequence, structural, and interaction profiles.",
-    tags: ["Virology", "Structural Biology"],
-    link: "https://example.com/hiv-study", // replace with actual
-  },
-  {
-    title: "Cardiovascular Healthcare Segmentation (Random Forest)",
-    desc:
-      "Built ML model to predict cardiovascular risk from clinical & demographic data of 100 patients.",
-    tags: ["Machine Learning", "Healthcare"],
-    link: "https://github.com/yourusername/cvd-risk", // replace with GitHub/demo
-  },
-  {
-    title:
-      "Hematococcus pluvialis: Beta-carotene production via stress optimization (2024–2025)",
-    desc:
-      "Explored 10 stressors; optimized via CCD & RSM; quantified via HPLC for β-carotene/Astaxanthin.",
-    tags: ["Algal Biotech", "HPLC", "RSM"],
-    link: "https://example.com/beta-carotene", // replace with actual
-  },
-];
-
 function TiltCard({ children }) {
   const ref = useRef(null);
   const [style, setStyle] = useState({
@@ -362,65 +329,105 @@ function TiltCard({ children }) {
   );
 }
 
-export default function Projects() {
+function Projects() {
+  const projects = [
+    {
+      title:
+        "Subtractive proteomics & virtual screening against Diabetic Gangrene bacteria",
+      desc:
+        "Pipeline to identify druggable bacterial proteins; in-silico analysis and docking of algal polysaccharides.",
+      tags: ["Bioinformatics", "Docking", "Drug Discovery"],
+      link: "https://example.com/project1", // replace with real link if available
+    },
+    {
+      title: "Rev–RRE interactions in HIV-1 Subtype B & C",
+      desc:
+        "Comparative in-silico analysis across 16 Rev–RRE complexes; sequence, structural, and interaction profiles.",
+      tags: ["Virology", "Structural Biology"],
+      link: "https://example.com/project2",
+    },
+    {
+      title: "Cardiovascular Healthcare Segmentation (Random Forest)",
+      desc:
+        "Built ML model to predict cardiovascular risk from clinical & demographic data of 100 patients.",
+      tags: ["Machine Learning", "Healthcare"],
+    },
+    {
+      title:
+        "Hematococcus pluvialis: Beta-carotene production via stress optimization (2024–2025)",
+      desc:
+        "Explored 10 stressors; optimized via CCD & RSM; quantified via HPLC for β-carotene/Astaxanthin.",
+      tags: ["Algal Biotech", "HPLC", "RSM"],
+    },
+  ];
+
   return (
     <section id="projects" className="py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-fuchsia-300 to-purple-300">
+        <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300">
           Projects
         </h2>
         <div className="mt-8 grid md:grid-cols-2 gap-6">
-          {projects.map((p, i) => {
-            const Card = (
-              <TiltCard>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl hover:shadow-2xl hover:shadow-purple-900/20">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-xl font-semibold text-white/90 group-hover:text-white transition">
+          {projects.map((p, i) => (
+            <motion.div
+              key={p.title}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              className="group"
+            >
+              {p.link ? (
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <TiltCard>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl hover:shadow-2xl hover:shadow-purple-900/20">
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="text-xl font-semibold text-white/90 group-hover:text-white transition">
+                          {p.title}
+                        </h3>
+                        <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition" />
+                      </div>
+                      <p className="mt-2 text-white/70">{p.desc}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {p.tags.map((t) => (
+                          <span
+                            key={t}
+                            className="text-xs rounded-full border border-white/10 bg-white/5 px-2 py-1 text-white/70"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </TiltCard>
+                </a>
+              ) : (
+                <TiltCard>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl">
+                    <h3 className="text-xl font-semibold text-white/90">
                       {p.title}
                     </h3>
-                    {p.link && (
-                      <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition" />
-                    )}
+                    <p className="mt-2 text-white/70">{p.desc}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {p.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="text-xs rounded-full border border-white/10 bg-white/5 px-2 py-1 text-white/70"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <p className="mt-2 text-white/70">{p.desc}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {p.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="text-xs rounded-full border border-white/10 bg-white/5 px-2 py-1 text-white/70"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </TiltCard>
-            );
-
-            return (
-              <motion.div
-                key={p.title}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="group"
-              >
-                {p.link ? (
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    {Card}
-                  </a>
-                ) : (
-                  Card
-                )}
-              </motion.div>
-            );
-          })}
+                </TiltCard>
+              )}
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -431,63 +438,28 @@ export default function Projects() {
 // PUBLICATIONS
 // ------------------------------------------------------------
 
-// TiltCard reused
-function TiltCard({ children }) {
-  const ref = useRef(null);
-  const [style, setStyle] = useState({
-    transform: "perspective(1000px) rotateX(0) rotateY(0)",
-  });
-
-  const onMove = (e) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const rx = -((y - rect.height / 2) / rect.height) * 10;
-    const ry = ((x - rect.width / 2) / rect.width) * 12;
-    setStyle({
-      transform: `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`,
-    });
-  };
-  const onLeave = () =>
-    setStyle({ transform: "perspective(1000px) rotateX(0) rotateY(0)" });
-
-  return (
-    <div
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      style={style}
-      className="transition-transform"
-    >
-      {children}
-    </div>
-  );
-}
-
-export default function Publications() {
+function Publications() {
   const publications = [
     {
       title:
         "Apoptosis inducing anti-proliferative activity of Citrullus lanatus seeds against A549 cell lines",
       venue: "South African Journal of Botany",
       detail: "171, 96–105",
-      link: "https://doi.org/10.1016/j.sajb.2024.03.015", // example DOI
+      link: "https://doi.org/10.1016/j.sajb.2024.03.015",
     },
     {
       title:
         "Growth and Production of the Milky White Medicinal Mushroom Calocybe indica through Varying Ratios of Organic Waste Substrates",
       venue: "International Journal of Medicinal Mushrooms",
       detail: "27(10)",
-      link: "https://doi.org/10.1615/IntJMedMushrooms.2024027390", // example DOI
+      link: "https://doi.org/10.1615/IntJMedMushrooms.2024027390",
     },
     {
       title:
         "Evaluation of marine algal sulphated polysaccharides as G6PC1 inhibitors – A computational approach",
       venue: "Indian Journal of Biochemistry and Biophysics",
       detail: "62(8), 896–908",
-      link: "https://nopr.niscpr.res.in/handle/123456789/67890", // example link
+      link: "https://nopr.niscpr.res.in/handle/123456789/67890",
     },
   ];
 
@@ -498,54 +470,55 @@ export default function Publications() {
           Research Publications
         </h2>
         <div className="mt-8 grid md:grid-cols-2 gap-6">
-          {publications.map((p, i) => {
-            const Card = (
-              <TiltCard>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl hover:shadow-2xl hover:shadow-cyan-900/20">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-lg font-semibold text-white/90 group-hover:text-white transition">
+          {publications.map((p, i) => (
+            <motion.div
+              key={p.title}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              className="group"
+            >
+              {p.link ? (
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <TiltCard>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl hover:shadow-2xl hover:shadow-cyan-900/20">
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="text-lg font-semibold text-white/90 group-hover:text-white transition">
+                          {p.title}
+                        </h3>
+                        <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition" />
+                      </div>
+                      <p className="mt-2 text-white/70 text-sm">
+                        {p.venue} — {p.detail}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <span className="text-xs rounded-full border border-purple-400 bg-purple-600/20 px-2 py-1 text-purple-300">
+                          DOI
+                        </span>
+                      </div>
+                    </div>
+                  </TiltCard>
+                </a>
+              ) : (
+                <TiltCard>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl">
+                    <h3 className="text-lg font-semibold text-white/90">
                       {p.title}
                     </h3>
-                    {p.link && (
-                      <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition" />
-                    )}
+                    <p className="mt-2 text-white/70 text-sm">
+                      {p.venue} — {p.detail}
+                    </p>
                   </div>
-                  <p className="mt-2 text-white/70 text-sm">
-                    {p.venue} — {p.detail}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="text-xs rounded-full border border-purple-400 bg-purple-600/20 px-2 py-1 text-purple-300">
-                      DOI
-                    </span>
-                  </div>
-                </div>
-              </TiltCard>
-            );
-
-            return (
-              <motion.div
-                key={p.title}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="group"
-              >
-                {p.link ? (
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    {Card}
-                  </a>
-                ) : (
-                  Card
-                )}
-              </motion.div>
-            );
-          })}
+                </TiltCard>
+              )}
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
